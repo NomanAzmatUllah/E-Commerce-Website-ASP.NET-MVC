@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EcommerceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cat_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="cat_createon" Type="datetime" />
+          <Property Name="cat_colour" Type="nvarchar" MaxLength="20" />
+          <Property Name="cat_icon" Type="nvarchar" MaxLength="50" />
+          <Property Name="cat_fk_ad_id" Type="int" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pro_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="pro_image1" Type="nvarchar" MaxLength="50" />
+          <Property Name="pro_image2" Type="nvarchar" MaxLength="50" />
+          <Property Name="pro_image3" Type="nvarchar" MaxLength="50" />
+          <Property Name="pro_desc" Type="nvarchar" MaxLength="100" />
+          <Property Name="pro_price" Type="float" />
+          <Property Name="pro_fk_cat_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_admin">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad_name" Type="nvarchar" MaxLength="30" />
+          <Property Name="ad_password" Type="nvarchar" MaxLength="30" />
+          <Property Name="ad_adcreatedon" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_productoordered">
+          <Key>
+            <PropertyRef Name="op_id" />
+          </Key>
+          <Property Name="op_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="op_fk_id" Type="int" />
+          <Property Name="op_quantity" Type="int" />
+          <Property Name="op_uniprice" Type="float" />
+          <Property Name="op_total" Type="float" />
+          <Property Name="op_fk_orid_id" Type="int" />
+        </EntityType>
+        <EntityType Name="tbl_userorder">
+          <Key>
+            <PropertyRef Name="or_id" />
+          </Key>
+          <Property Name="or_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="o_usename" Type="nvarchar" MaxLength="50" />
+          <Property Name="o_phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="o_email" Type="nvarchar" MaxLength="50" />
+          <Property Name="o_createon" Type="datetime" />
+          <Property Name="o_approved" Type="bit" />
+        </EntityType>
+        <Association Name="FK__category__cat_fk__1367E606">
+          <End Role="tbl_admin" Type="Self.tbl_admin" Multiplicity="0..1" />
+          <End Role="category" Type="Self.category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_admin">
+              <PropertyRef Name="ad_id" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="cat_fk_ad_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product__pro_fk___164452B1">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="pro_fk_cat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_produ__op_fk__1BFD2C07">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="tbl_productoordered" Type="Self.tbl_productoordered" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="tbl_productoordered">
+              <PropertyRef Name="op_fk_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_produ__op_fk__1CF15040">
+          <End Role="tbl_userorder" Type="Self.tbl_userorder" Multiplicity="0..1" />
+          <End Role="tbl_productoordered" Type="Self.tbl_productoordered" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_userorder">
+              <PropertyRef Name="or_id" />
+            </Principal>
+            <Dependent Role="tbl_productoordered">
+              <PropertyRef Name="op_fk_orid_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EcommerceModelStoreContainer">
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_admin" EntityType="Self.tbl_admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_productoordered" EntityType="Self.tbl_productoordered" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_userorder" EntityType="Self.tbl_userorder" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__category__cat_fk__1367E606" Association="Self.FK__category__cat_fk__1367E606">
+            <End Role="tbl_admin" EntitySet="tbl_admin" />
+            <End Role="category" EntitySet="category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product__pro_fk___164452B1" Association="Self.FK__product__pro_fk___164452B1">
+            <End Role="category" EntitySet="category" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_produ__op_fk__1BFD2C07" Association="Self.FK__tbl_produ__op_fk__1BFD2C07">
+            <End Role="product" EntitySet="product" />
+            <End Role="tbl_productoordered" EntitySet="tbl_productoordered" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_produ__op_fk__1CF15040" Association="Self.FK__tbl_produ__op_fk__1CF15040">
+            <End Role="tbl_userorder" EntitySet="tbl_userorder" />
+            <End Role="tbl_productoordered" EntitySet="tbl_productoordered" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EcommerceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="cat_id" />
+          </Key>
+          <Property Name="cat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cat_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="cat_createon" Type="DateTime" Precision="3" />
+          <Property Name="cat_colour" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="cat_icon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cat_fk_ad_id" Type="Int32" />
+          <NavigationProperty Name="tbl_admin" Relationship="Self.FK__category__cat_fk__1367E606" FromRole="category" ToRole="tbl_admin" />
+          <NavigationProperty Name="products" Relationship="Self.FK__product__pro_fk___164452B1" FromRole="category" ToRole="product" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="pro_id" />
+          </Key>
+          <Property Name="pro_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pro_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pro_image1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pro_image2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pro_image3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pro_desc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="pro_price" Type="Double" />
+          <Property Name="pro_fk_cat_id" Type="Int32" />
+          <NavigationProperty Name="category" Relationship="Self.FK__product__pro_fk___164452B1" FromRole="product" ToRole="category" />
+          <NavigationProperty Name="tbl_productoordered" Relationship="Self.FK__tbl_produ__op_fk__1BFD2C07" FromRole="product" ToRole="tbl_productoordered" />
+        </EntityType>
+        <EntityType Name="tbl_admin">
+          <Key>
+            <PropertyRef Name="ad_id" />
+          </Key>
+          <Property Name="ad_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ad_password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ad_adcreatedon" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="categories" Relationship="Self.FK__category__cat_fk__1367E606" FromRole="tbl_admin" ToRole="category" />
+        </EntityType>
+        <EntityType Name="tbl_productoordered">
+          <Key>
+            <PropertyRef Name="op_id" />
+          </Key>
+          <Property Name="op_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="op_fk_id" Type="Int32" />
+          <Property Name="op_quantity" Type="Int32" />
+          <Property Name="op_uniprice" Type="Double" />
+          <Property Name="op_total" Type="Double" />
+          <Property Name="op_fk_orid_id" Type="Int32" />
+          <NavigationProperty Name="product" Relationship="Self.FK__tbl_produ__op_fk__1BFD2C07" FromRole="tbl_productoordered" ToRole="product" />
+          <NavigationProperty Name="tbl_userorder" Relationship="Self.FK__tbl_produ__op_fk__1CF15040" FromRole="tbl_productoordered" ToRole="tbl_userorder" />
+        </EntityType>
+        <EntityType Name="tbl_userorder">
+          <Key>
+            <PropertyRef Name="or_id" />
+          </Key>
+          <Property Name="or_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="o_usename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="o_phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="o_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="o_createon" Type="DateTime" Precision="3" />
+          <Property Name="o_approved" Type="Boolean" />
+          <NavigationProperty Name="tbl_productoordered" Relationship="Self.FK__tbl_produ__op_fk__1CF15040" FromRole="tbl_userorder" ToRole="tbl_productoordered" />
+        </EntityType>
+        <Association Name="FK__category__cat_fk__1367E606">
+          <End Role="tbl_admin" Type="Self.tbl_admin" Multiplicity="0..1" />
+          <End Role="category" Type="Self.category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_admin">
+              <PropertyRef Name="ad_id" />
+            </Principal>
+            <Dependent Role="category">
+              <PropertyRef Name="cat_fk_ad_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__product__pro_fk___164452B1">
+          <End Role="category" Type="Self.category" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="cat_id" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="pro_fk_cat_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_produ__op_fk__1BFD2C07">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="tbl_productoordered" Type="Self.tbl_productoordered" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="pro_id" />
+            </Principal>
+            <Dependent Role="tbl_productoordered">
+              <PropertyRef Name="op_fk_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tbl_produ__op_fk__1CF15040">
+          <End Role="tbl_userorder" Type="Self.tbl_userorder" Multiplicity="0..1" />
+          <End Role="tbl_productoordered" Type="Self.tbl_productoordered" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_userorder">
+              <PropertyRef Name="or_id" />
+            </Principal>
+            <Dependent Role="tbl_productoordered">
+              <PropertyRef Name="op_fk_orid_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EcommerceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="categories" EntityType="Self.category" />
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="tbl_admin" EntityType="Self.tbl_admin" />
+          <EntitySet Name="tbl_productoordered" EntityType="Self.tbl_productoordered" />
+          <EntitySet Name="tbl_userorder" EntityType="Self.tbl_userorder" />
+          <AssociationSet Name="FK__category__cat_fk__1367E606" Association="Self.FK__category__cat_fk__1367E606">
+            <End Role="tbl_admin" EntitySet="tbl_admin" />
+            <End Role="category" EntitySet="categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__product__pro_fk___164452B1" Association="Self.FK__product__pro_fk___164452B1">
+            <End Role="category" EntitySet="categories" />
+            <End Role="product" EntitySet="products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_produ__op_fk__1BFD2C07" Association="Self.FK__tbl_produ__op_fk__1BFD2C07">
+            <End Role="product" EntitySet="products" />
+            <End Role="tbl_productoordered" EntitySet="tbl_productoordered" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tbl_produ__op_fk__1CF15040" Association="Self.FK__tbl_produ__op_fk__1CF15040">
+            <End Role="tbl_userorder" EntitySet="tbl_userorder" />
+            <End Role="tbl_productoordered" EntitySet="tbl_productoordered" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EcommerceModelStoreContainer" CdmEntityContainer="EcommerceEntities">
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="EcommerceModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+                <ScalarProperty Name="cat_name" ColumnName="cat_name" />
+                <ScalarProperty Name="cat_createon" ColumnName="cat_createon" />
+                <ScalarProperty Name="cat_colour" ColumnName="cat_colour" />
+                <ScalarProperty Name="cat_icon" ColumnName="cat_icon" />
+                <ScalarProperty Name="cat_fk_ad_id" ColumnName="cat_fk_ad_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="EcommerceModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="pro_id" ColumnName="pro_id" />
+                <ScalarProperty Name="pro_name" ColumnName="pro_name" />
+                <ScalarProperty Name="pro_image1" ColumnName="pro_image1" />
+                <ScalarProperty Name="pro_image2" ColumnName="pro_image2" />
+                <ScalarProperty Name="pro_image3" ColumnName="pro_image3" />
+                <ScalarProperty Name="pro_desc" ColumnName="pro_desc" />
+                <ScalarProperty Name="pro_price" ColumnName="pro_price" />
+                <ScalarProperty Name="pro_fk_cat_id" ColumnName="pro_fk_cat_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_admin">
+            <EntityTypeMapping TypeName="EcommerceModel.tbl_admin">
+              <MappingFragment StoreEntitySet="tbl_admin">
+                <ScalarProperty Name="ad_id" ColumnName="ad_id" />
+                <ScalarProperty Name="ad_name" ColumnName="ad_name" />
+                <ScalarProperty Name="ad_password" ColumnName="ad_password" />
+                <ScalarProperty Name="ad_adcreatedon" ColumnName="ad_adcreatedon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_productoordered">
+            <EntityTypeMapping TypeName="EcommerceModel.tbl_productoordered">
+              <MappingFragment StoreEntitySet="tbl_productoordered">
+                <ScalarProperty Name="op_id" ColumnName="op_id" />
+                <ScalarProperty Name="op_fk_id" ColumnName="op_fk_id" />
+                <ScalarProperty Name="op_quantity" ColumnName="op_quantity" />
+                <ScalarProperty Name="op_uniprice" ColumnName="op_uniprice" />
+                <ScalarProperty Name="op_total" ColumnName="op_total" />
+                <ScalarProperty Name="op_fk_orid_id" ColumnName="op_fk_orid_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_userorder">
+            <EntityTypeMapping TypeName="EcommerceModel.tbl_userorder">
+              <MappingFragment StoreEntitySet="tbl_userorder">
+                <ScalarProperty Name="or_id" ColumnName="or_id" />
+                <ScalarProperty Name="o_usename" ColumnName="o_usename" />
+                <ScalarProperty Name="o_phone" ColumnName="o_phone" />
+                <ScalarProperty Name="o_email" ColumnName="o_email" />
+                <ScalarProperty Name="o_createon" ColumnName="o_createon" />
+                <ScalarProperty Name="o_approved" ColumnName="o_approved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

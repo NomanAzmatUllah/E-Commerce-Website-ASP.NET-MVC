@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EcommerceModelStoreContainer" CdmEntityContainer="EcommerceEntities">
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="EcommerceModel.category">
+        <MappingFragment StoreEntitySet="category">
+          <ScalarProperty Name="cat_id" ColumnName="cat_id" />
+          <ScalarProperty Name="cat_name" ColumnName="cat_name" />
+          <ScalarProperty Name="cat_createon" ColumnName="cat_createon" />
+          <ScalarProperty Name="cat_colour" ColumnName="cat_colour" />
+          <ScalarProperty Name="cat_icon" ColumnName="cat_icon" />
+          <ScalarProperty Name="cat_fk_ad_id" ColumnName="cat_fk_ad_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="products">
+      <EntityTypeMapping TypeName="EcommerceModel.product">
+        <MappingFragment StoreEntitySet="product">
+          <ScalarProperty Name="pro_id" ColumnName="pro_id" />
+          <ScalarProperty Name="pro_name" ColumnName="pro_name" />
+          <ScalarProperty Name="pro_image1" ColumnName="pro_image1" />
+          <ScalarProperty Name="pro_image2" ColumnName="pro_image2" />
+          <ScalarProperty Name="pro_image3" ColumnName="pro_image3" />
+          <ScalarProperty Name="pro_desc" ColumnName="pro_desc" />
+          <ScalarProperty Name="pro_price" ColumnName="pro_price" />
+          <ScalarProperty Name="pro_fk_cat_id" ColumnName="pro_fk_cat_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_admin">
+      <EntityTypeMapping TypeName="EcommerceModel.tbl_admin">
+        <MappingFragment StoreEntitySet="tbl_admin">
+          <ScalarProperty Name="ad_id" ColumnName="ad_id" />
+          <ScalarProperty Name="ad_name" ColumnName="ad_name" />
+          <ScalarProperty Name="ad_password" ColumnName="ad_password" />
+          <ScalarProperty Name="ad_adcreatedon" ColumnName="ad_adcreatedon" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_productoordered">
+      <EntityTypeMapping TypeName="EcommerceModel.tbl_productoordered">
+        <MappingFragment StoreEntitySet="tbl_productoordered">
+          <ScalarProperty Name="op_id" ColumnName="op_id" />
+          <ScalarProperty Name="op_fk_id" ColumnName="op_fk_id" />
+          <ScalarProperty Name="op_quantity" ColumnName="op_quantity" />
+          <ScalarProperty Name="op_uniprice" ColumnName="op_uniprice" />
+          <ScalarProperty Name="op_total" ColumnName="op_total" />
+          <ScalarProperty Name="op_fk_orid_id" ColumnName="op_fk_orid_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_userorder">
+      <EntityTypeMapping TypeName="EcommerceModel.tbl_userorder">
+        <MappingFragment StoreEntitySet="tbl_userorder">
+          <ScalarProperty Name="or_id" ColumnName="or_id" />
+          <ScalarProperty Name="o_usename" ColumnName="o_usename" />
+          <ScalarProperty Name="o_phone" ColumnName="o_phone" />
+          <ScalarProperty Name="o_email" ColumnName="o_email" />
+          <ScalarProperty Name="o_createon" ColumnName="o_createon" />
+          <ScalarProperty Name="o_approved" ColumnName="o_approved" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
